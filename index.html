@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memory Maze for You</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      padding: 20px;
+      text-align: center;
+      overflow-x: hidden;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .heart {
+      font-size: 14px;
+      white-space: pre;
+      color: pink;
+      margin-bottom: 30px;
+    }
+
+    .memory {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+      transition: all 0.3s ease;
+      animation: riseUp 1s ease forwards;
+      opacity: 0;
+    }
+
+    .memory:nth-child(2) { animation-delay: 0.5s; }
+    .memory:nth-child(3) { animation-delay: 1s; }
+    .memory:nth-child(4) { animation-delay: 1.5s; }
+
+    @keyframes riseUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    .memory:hover {
+      transform: scale(1.05);
+    }
+
+    .question {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #ffb6c1;
+    }
+
+    input[type="text"] {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 80%;
+      max-width: 400px;
+      font-size: 16px;
+    }
+
+    .response {
+      color: #90ee90;
+      margin-top: 10px;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      font-size: 20px;
+      animation: float 4s linear infinite;
+      color: pink;
+      opacity: 0.7;
+    }
+
+    @keyframes float {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(-200px) translateY(-800px); opacity: 0; }
+    }
+
+    #finalButton {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      background-color: #ff69b4;
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 10px pink;
+    }
+
+    #finalMessage {
+      display: none;
+      margin-top: 40px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      animation: loveReveal 1.2s ease-in-out forwards;
+      font-size: 18px;
+      color: #ffe4e1;
+    }
+
+    @keyframes loveReveal {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart">
+    ***   ***<br>
+    *******  *******<br>
+    ***************<br>
+    ***************<br>
+     *************<br>
+      ***********<br>
+        *****<br>
+         ***<br>
+          *
+  </div>
+
+  <div class="memory">
+    <strong>1. In school, I loved the way you talked.</strong>
+    <div class="question">What’s your funniest word to say out loud?</div>
+    <input type="text" id="answer1" placeholder="Type here...">
+    <div class="response" id="response1"></div>
+  </div>
+
+  <div class="memory">
+    <strong>2. When we held hands for the first time in the corridor.</strong>
+    <div class="question">What moment with me made you smile the most?</div>
+    <input type="text" id="answer2" placeholder="Type here...">
+    <div class="response" id="response2"></div>
+  </div>
+
+  <div class="memory">
+    <strong>3. That time you gave me your hairtie and put it on my hand.</strong>
+    <div class="question">What’s something small that meant a lot to you?</div>
+    <input type="text" id="answer3" placeholder="Type here...">
+    <div class="response" id="response3"></div>
+  </div>
+
+  <button id="finalButton" onclick="showFinal()">Finish Maze</button>
+
+  <div id="finalMessage">
+    You’ve reached the end of the maze, but the real journey is forever.  
+    Thank you for being in my life, for your smile, your weird words, and your tiny big moments.  
+    I love you — always.
+  </div>
+
+  <script>
+    function popupMessage(text) {
+      const pop = document.createElement("div");
+      pop.innerText = text;
+      pop.style.position = "fixed";
+      pop.style.top = "20px";
+      pop.style.left = "50%";
+      pop.style.transform = "translateX(-50%)";
+      pop.style.background = "#ff69b4";
+      pop.style.color = "#fff";
+      pop.style.padding = "10px 20px";
+      pop.style.borderRadius = "10px";
+      pop.style.boxShadow = "0 0 10px #fff";
+      pop.style.zIndex = "1000";
+      document.body.appendChild(pop);
+      setTimeout(() => pop.remove(), 3000);
+    }
+
+    function handleInput(idInput, idResponse) {
+      const input = document.getElementById(idInput);
+      const response = document.getElementById(idResponse);
+      input.addEventListener("change", () => {
+        response.innerText = `That's adorable! "${input.value}"`;
+        popupMessage("Awww! You're so cute!");
+      });
+    }
+
+    handleInput("answer1", "response1");
+    handleInput("answer2", "response2");
+    handleInput("answer3", "response3");
+
+    function showFinal() {
+      document.getElementById("finalMessage").style.display = "block";
+      // boost heart spawn
+      let burst = 0;
+      let burstInterval = setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "floating-heart";
+        heart.innerText = "❤";
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+        burst++;
+        if (burst > 30) clearInterval(burstInterval);
+      }, 100);
+    }
+
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "floating-heart";
+      heart.innerText = "❤";
+      heart.style.left = `${Math.random() * 100}%`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }, 600);
+  </script>
+</body>
+</html>
